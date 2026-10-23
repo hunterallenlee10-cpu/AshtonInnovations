@@ -21,3 +21,6 @@ npm-debug.log*
 /assets/compare
 /assets/crops
 /assets/tile_preview_*
+
+# QA screenshots and reports (regenerate with scripts/qa.mjs)
+/qa

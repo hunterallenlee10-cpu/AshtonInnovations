@@ -20,16 +20,23 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 JOBS = [
     # name, source, size, flatten strength (0..1), tile
-    ("e1-solid", "e1_501.png", 1024, 1.0, True),
+    ("e1-solid", "e1_501.png", 1024, -1.0, True),  # -1: keep only fine grain on a uniform base
     ("e2-flake", "e2_603.png", 1024, 0.8, True),
     ("e3-metallic", "e3_702.png", 1024, 0.0, False),  # shader uses mirrored repeat
     ("e4-plaster", "e4_801.png", 1024, 1.0, True),
-    ("e5-knockdown", "e5_901.png", 1024, 0.7, True),
+    ("e5-knockdown", "e5_901.png", 1024, 0.7, False),  # single swatch, never tiled
 ]
 
 
 def flatten(a: np.ndarray, strength: float) -> np.ndarray:
-    if strength <= 0:
+    if strength < 0:
+        # uniform satin: mean colour plus only the fine grain (high-pass), so no
+        # mid-frequency blotches can repeat when the texture is tiled
+        img = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+        blur = np.asarray(img.filter(ImageFilter.GaussianBlur(radius=5))).astype(np.float32)
+        mean = a.reshape(-1, 3).mean(axis=0)
+        return mean + (a - blur) * 0.9
+    if strength == 0:
         return a
     img = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
     blur = np.asarray(img.filter(ImageFilter.GaussianBlur(radius=a.shape[0] / 6))).astype(np.float32)

@@ -52,3 +52,20 @@ date	asset	model	settings	job_id	credits	verdict	output
 2026-10-23	upscale paint4	bytedance_image_upscale	2k	900fd095-21f1-4c67-8af7-e294972c8c91	2	pending review	assets/raw/upscale/paint4.png
 2026-10-23	upscale truck	bytedance_image_upscale	2k	66811d3b-67d8-4ce7-8bd1-d3daf769f90b	2	pending review	assets/raw/upscale/truck.png
 2026-10-23	upscale paint2	bytedance_image_upscale	2k	9c98a4d1-6858-4d8a-851d-7b4847a633b9	2	pending review	assets/raw/upscale/paint2.png
+2026-10-23	C0 A/B clip1 Kling 4.0 720p	kling4_0	5s 720p	20aa5446-a864-4c98-a52c-e7549adb1d01	2.5	WINNER (clean, locked)	assets/raw/video/c1_kling4_720.mp4
+2026-10-23	C0 A/B clip1 Kling 3.0 std	kling3_0	5s std silent	c1da620e-aa7d-4f88-bb94-0b9b4098ef4b	7.5	lost (keyhole artefact, late motion)	assets/raw/video/c1_kling3_std.mp4
+2026-10-23	C1 clip1 final KF1>KF2	kling4_0	5s 1080p	3f1f011a-8b8f-4f95-8108-b0e864898392	5	ACCEPTED	assets/raw/video/c1_kling4_1080.mp4
+2026-10-23	C2 clip2 final KF2>KF3	kling4_0	5s 1080p	7c14143d-f5d8-4209-8b72-d1126c4155b2	5	ACCEPTED	assets/raw/video/c2_kling4_1080.mp4
+2026-10-23	D1b epoxy loop (start=end D1a s402)	kling3_0	10s pro silent	17a3af6e-ee04-4d78-b58f-8155b8caa103	17.5	ACCEPTED (loop closes)	public/video/epoxy-loop.*
+2026-10-23	D2c tilt v1	kling3_0	10s pro silent	2b5a292a-6425-41bf-bd58-013f3ff6172c	17.5	REJECTED (morph not tilt, neon red crack)	assets/raw/video/d2_tilt_kling3_pro.mp4
+2026-10-23	D2c tilt v2	kling4_0	10s 1080p	fe28904c-e65d-48e4-b0a1-173805b7d091	10	ACCEPTED (real tilt)	public/video/look-down.*
+2026-10-23	B3 KF2 s2001	nano_banana_2_1	16:9 2k edit of KF3	d4230b63-d7e7-442f-80e8-801ec5509d42	2	CHOSEN	assets/raw/kf/kf2_2001.png
+2026-10-23	B3 KF2 s2002	nano_banana_2_1	16:9 2k edit of KF3	c4b5123f-9bab-4045-a365-0a45d67e0ba5	2	not chosen (printed text on boards)	assets/raw/kf/kf2_2002.png
+2026-10-23	B4 KF1 s2101	nano_banana_2_1	16:9 2k edit of KF3	cec0f95b-e9c6-446c-96b1-c0d917f6f355	2	CHOSEN (2nd candidate skipped)	assets/raw/kf/kf1_2101.png
+2026-10-23	D1a loop key s401	nano_banana_2_1	16:9 2k	1988b168-2cca-4d6b-8651-6abdba6fce36	2	not chosen	assets/raw/d1/d1a_401.png
+2026-10-23	D1a loop key s402	nano_banana_2_1	16:9 2k	c21a5933-ab67-4739-a508-0c18009555c4	2	CHOSEN	assets/raw/d1/d1a_402.png
+2026-10-23	D2b floor end (edit of D2a)	nano_banana_2_1	16:9 2k	a69aad6b-78fb-470f-88a0-56f93bad584d	2	CHOSEN	assets/raw/d2/d2b_1101.png
+2026-10-23	E2 flake s603	nano_banana_2_1	1:1 2k	f8716f90-5e32-4ac0-826c-955c5806b2b7	2	CHOSEN	public/textures/e2-flake.*
+2026-10-23	E1 solid s501	nano_banana_2_1	1:1 2k	536cc93c-75f3-40f1-8d8d-746e9c7ee6d0	2	CHOSEN (flattened)	public/textures/e1-solid.*
+2026-10-23	E4 plaster s801	nano_banana_2_1	1:1 2k	d8bb8fb0-795d-4814-9e0a-eac2d3916e60	2	CHOSEN	public/textures/e4-plaster.webp
+2026-10-23	E5 knockdown s901	nano_banana_2_1	1:1 2k	e8043fb7-2b0f-40e9-87da-2059c475e7e4	2	CHOSEN	public/textures/e5-knockdown.webp

@@ -33,23 +33,23 @@ const sq = (id: string, group: PhotoGroup, caption: string, alt: string): Photo 
 });
 
 export const photos: Photo[] = [
-  sq("12", "sculptured", "Sculptured Ceiling With Single Arch", "Sculptured ceiling with layered crown moulding above a wall with a single recessed arch."),
-  sq("sculptured", "sculptured", "Sculptured Ceiling w/ Brass Inlay", "Stepped sculptured ceiling painted grey with a thin brass inlay line following the steps."),
+  sq("12", "sculptured", "Sculptured Ceiling With Single Arch", "Sculptured ceiling with layered crown molding above a wall with a single recessed arch."),
+  sq("sculptured", "sculptured", "Sculptured Ceiling w/ Brass Inlay", "Stepped sculptured ceiling painted gray with a thin brass inlay line following the steps."),
   sq("21", "sculptured", "Sculptured Corner Ceiling With Light Medallion", "Sculptured corner ceiling with a recessed panel and a brass chandelier on a light medallion."),
   sq("dd3", "sculptured", "Long View Sculptured Ceiling", "Long view of a sculptured ceiling framed by two white columns, with a chandelier beyond."),
   sq("20", "medallions", "Two Layer Light Medallion", "Two-layer square light medallion on a ceiling, with a brass and glass chandelier hanging from it."),
-  sq("19", "medallions", "Two Layer With Reveal Light Medallion", "Two-layer light medallion with a reveal between layers and a slender pendant light at its centre."),
+  sq("19", "medallions", "Two Layer With Reveal Light Medallion", "Two-layer light medallion with a reveal between layers and a slender pendant light at its center."),
   sq("medalion", "medallions", "8 Sided Two Layer Light Medallion", "Eight-sided, two-layer light medallion with a crystal chandelier."),
-  sq("10", "raised", "Raised Panels", "Wall with raised drywall panels below a chair rail and crown moulding."),
+  sq("10", "raised", "Raised Panels", "Wall with raised drywall panels below a chair rail and crown molding."),
   sq("18", "raised", "Raised Panels", "Raised panels running along a dining room wall above a hardwood floor."),
   sq("16", "raised", "Raised Panel Below Window", "Raised panel detail set into the wall below a row of windows."),
   sq("14", "raised", "Triple Arched Wall", "Dining room wall with three recessed arches behind a china cabinet and chandelier."),
   sq("09", "track", "Single Track", "Ceiling with a single octagonal track line around a central light fixture."),
-  sq("35", "track", "Double Track", "Ceiling with a double track line and a ceiling fan at its centre."),
+  sq("35", "track", "Double Track", "Ceiling with a double track line and a ceiling fan at its center."),
   sq("28", "track", "Double Track Ceiling", "Double track ceiling lines following the room's clipped corners."),
   sq("24", "track", "Double Track Octagon", "Double track lines forming an octagon on a flat ceiling."),
   sq("dbloct1", "track", "Double Layer Octagon", "Double-layer octagon ceiling detail with an octagonal medallion and ceiling fan."),
-  sq("dbloct2", "track", "Double Layer Octagon with Sky in the Center", "Double-layer octagon ceiling with a painted blue sky at its centre."),
+  sq("dbloct2", "track", "Double Layer Octagon with Sky in the Center", "Double-layer octagon ceiling with a painted blue sky at its center."),
   sq("01", "tray", "Tray Ceiling with Light Medallion", "Octagonal tray ceiling with recessed lights and a brass chandelier on a light medallion."),
   sq("04", "tray", "Tray Ceiling with Arched Doorway", "Tray ceiling above a hallway with an arched doorway leading into the next room."),
   sq("02", "tray", "Tray Ceiling", "Tray ceiling with long angled steps seen from below."),
@@ -73,7 +73,7 @@ export const photos: Photo[] = [
     group: "crew",
     alt: "Ashton Innovations work truck parked at a house under construction.",
     width: 1400,
-    height: 1326,
+    height: 1404,
   },
 ];
 

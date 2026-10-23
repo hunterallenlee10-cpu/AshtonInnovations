@@ -12,6 +12,9 @@ import { gsap } from "gsap";
   - Eased scrub: the drawn frame chases the scroll target with a lerp.
   - Cover fit, devicePixelRatio capped at 2, portrait set on portrait screens.
   - Never scrubs a <video>. Skips drawing while off-screen.
+  - Waits for the page to finish loading (or the first scroll/touch) before
+    downloading frames, so the sequence never competes with first paint.
+    A poster is painted on the canvas until the first frames land.
 */
 
 type FrameSet = {
@@ -34,6 +37,9 @@ export const PORTRAIT_QUERY = "(max-aspect-ratio: 4/5)";
 
 type Props = {
   manifestUrl?: string;
+  /** Drawn on the canvas until real frames arrive. */
+  posterSrc?: string;
+  posterSrcPortrait?: string;
   ariaLabel: string;
   className?: string;
   /** Called once when the first frame has been drawn. */
@@ -41,7 +47,7 @@ type Props = {
 };
 
 export const ScrollSequence = forwardRef<SequenceHandle, Props>(function ScrollSequence(
-  { manifestUrl = "/frames/manifest.json", ariaLabel, className = "", onReady },
+  { manifestUrl = "/frames/manifest.json", posterSrc, posterSrcPortrait, ariaLabel, className = "", onReady },
   ref,
 ) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -83,8 +89,10 @@ export const ScrollSequence = forwardRef<SequenceHandle, Props>(function ScrollS
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const portrait = window.matchMedia(PORTRAIT_QUERY).matches;
 
-    const src = (i: number) =>
-      `${set!.path}${String(i + 1).padStart(set!.pad, "0")}${set!.ext}`;
+    let poster: HTMLImageElement | null = null;
+    let posterReady = false;
+
+    const src = (i: number) => `${set!.path}${String(i + 1).padStart(set!.pad, "0")}${set!.ext}`;
 
     const pump = () => {
       while (!disposed && set && inFlight < 6 && cursor < order.length) {
@@ -140,12 +148,19 @@ export const ScrollSequence = forwardRef<SequenceHandle, Props>(function ScrollS
     };
 
     const tick = () => {
-      if (!set || !visible) return;
+      if (!visible) return;
+      if (!set) {
+        if (posterReady && poster && dirty) {
+          draw(poster);
+          dirty = false;
+        }
+        return;
+      }
       current = reduce ? target.current : current + (target.current - current) * 0.14;
       if (Math.abs(target.current - current) < 0.0004) current = target.current;
       const f = Math.round(current * (set.count - 1));
       if (f !== lastDrawn || dirty) {
-        const im = ready[f] ? imgs[f] : nearestReady(f);
+        const im = ready[f] ? imgs[f] : (nearestReady(f) ?? (posterReady ? poster : null));
         if (im) {
           draw(im);
           lastDrawn = ready[f] ? f : -1;
@@ -169,37 +184,67 @@ export const ScrollSequence = forwardRef<SequenceHandle, Props>(function ScrollS
     );
     io.observe(canvas);
 
-    fetch(manifestUrl)
-      .then((r) => r.json() as Promise<Manifest>)
-      .then((m) => {
-        if (disposed) return;
-        set = portrait ? m.mobile : m.desktop;
-        imgs = new Array(set.count);
-        ready = new Uint8Array(set.count);
-        const seen = new Set<number>();
-        // Start where the visitor is, then coarse-to-fine across the range.
-        const start = Math.round(target.current * (set.count - 1));
-        order = [start];
-        seen.add(start);
-        for (const step of [16, 8, 4, 2, 1]) {
-          for (let i = 0; i < set.count; i += step) {
-            if (!seen.has(i)) {
-              seen.add(i);
-              order.push(i);
+    let started = false;
+    const begin = () => {
+      if (started || disposed) return;
+      started = true;
+      cleanupTriggers();
+      const pSrc = portrait ? (posterSrcPortrait ?? posterSrc) : posterSrc;
+      if (pSrc) {
+        poster = new Image();
+        poster.decoding = "async";
+        poster.onload = () => {
+          posterReady = true;
+          dirty = true;
+        };
+        poster.src = pSrc;
+      }
+      fetch(manifestUrl)
+        .then((r) => r.json() as Promise<Manifest>)
+        .then((m) => {
+          if (disposed) return;
+          set = portrait ? m.mobile : m.desktop;
+          imgs = new Array(set.count);
+          ready = new Uint8Array(set.count);
+          const seen = new Set<number>();
+          // Start where the visitor is, then coarse-to-fine across the range.
+          const start = Math.round(target.current * (set.count - 1));
+          order = [start];
+          seen.add(start);
+          for (const step of [16, 8, 4, 2, 1]) {
+            for (let i = 0; i < set.count; i += step) {
+              if (!seen.has(i)) {
+                seen.add(i);
+                order.push(i);
+              }
             }
           }
-        }
-        if (!seen.has(set.count - 1)) order.push(set.count - 1);
-        resize();
-        pump();
-      })
-      .catch(() => {
-        /* poster stays visible */
-      });
+          if (!seen.has(set.count - 1)) order.push(set.count - 1);
+          resize();
+          pump();
+        })
+        .catch(() => {
+          /* poster stays visible */
+        });
+    };
+    const kickEvents = ["wheel", "touchstart", "pointerdown", "keydown", "scroll"] as const;
+    let idleTimer = 0;
+    const cleanupTriggers = () => {
+      kickEvents.forEach((ev) => window.removeEventListener(ev, begin));
+      window.removeEventListener("load", onLoad);
+      window.clearTimeout(idleTimer);
+    };
+    const onLoad = () => {
+      idleTimer = window.setTimeout(begin, 900);
+    };
+    kickEvents.forEach((ev) => window.addEventListener(ev, begin, { passive: true, once: true }));
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad, { once: true });
 
     gsap.ticker.add(tick);
     return () => {
       disposed = true;
+      cleanupTriggers();
       gsap.ticker.remove(tick);
       ro.disconnect();
       io.disconnect();
@@ -210,7 +255,7 @@ export const ScrollSequence = forwardRef<SequenceHandle, Props>(function ScrollS
         }
       });
     };
-  }, [manifestUrl]);
+  }, [manifestUrl, posterSrc, posterSrcPortrait]);
 
   return (
     <canvas

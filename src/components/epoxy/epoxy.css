@@ -1,0 +1,73 @@
+/* Epoxy section: fallback layers + chip broadcast (transform/opacity only).
+   Plain global CSS with an epx- prefix: this project's Tailwind Turbopack rule
+   treats every *.css file as global, so CSS modules don't work here. */
+
+.epx-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.epx-layer-on {
+  opacity: 1;
+}
+
+.epx-tile {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 420px 420px;
+}
+
+.epx-flake-tex {
+  transition: opacity 0.9s ease 0.85s;
+  opacity: 0;
+}
+.epx-layer-on .epx-flake-tex {
+  opacity: 1;
+}
+
+.epx-chip {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: calc(var(--s) * 0.72);
+  background: var(--c);
+  clip-path: polygon(8% 0, 100% 14%, 86% 100%, 0 78%);
+  opacity: 0;
+  transform: translate3d(0, -46px, 0) rotate(var(--r)) scale(1.9);
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) var(--d),
+    opacity 0.25s ease var(--d);
+  will-change: transform, opacity;
+}
+.epx-layer-on .epx-chip {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(var(--r)) scale(1);
+}
+
+/* gloss: a soft reflected window and a sheen band, so flat textures read as a coated floor */
+.epx-gloss {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 40% at 72% 18%, rgba(255, 255, 255, 0.16), transparent 70%),
+    linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.07) 46%, transparent 54%),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.epx-slot {
+  background:
+    repeating-linear-gradient(135deg, rgba(244, 241, 236, 0.035) 0 1px, transparent 1px 14px),
+    var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .epx-chip,
+  .epx-flake-tex,
+  .epx-layer {
+    transition: none;
+  }
+}

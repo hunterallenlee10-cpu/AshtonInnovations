@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Same test as PORTRAIT_QUERY in the scroll engine: portrait frames + portrait layout */
+@custom-variant tall (@media (max-aspect-ratio: 4/5));
+
 /* ------------------------------------------------------------------
    Ashton Innovations: Architectural Editorial
    Plaster, ink, one red. Sharp corners everywhere (radius 0).
@@ -53,181 +56,185 @@
   --ease-arch: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html {
-  background: var(--ink);
-  -webkit-text-size-adjust: 100%;
-  scroll-padding-top: var(--nav-h);
+@layer base {
+  html {
+    background: var(--ink);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--nav-h);
+  }
+
+  body {
+    background: var(--plaster);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--red);
+    color: var(--plaster);
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
+
+  /* Focus: visible, sharp, never removed */
+  :focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
+  }
+  .on-ink :focus-visible,
+  .on-ink:focus-visible {
+    outline-color: var(--plaster);
+  }
 }
 
-body {
-  background: var(--plaster);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv11";
-  text-rendering: optimizeLegibility;
-  overflow-x: clip;
-}
+@layer components {
+  /* ---------------- type ---------------- */
 
-::selection {
-  background: var(--red);
-  color: var(--plaster);
-}
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 0.92;
+  }
 
-/* Lenis */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: clip;
-}
+  .annot {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
 
-/* Focus: visible, sharp, never removed */
-:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 3px;
-}
-.on-ink :focus-visible,
-.on-ink:focus-visible {
-  outline-color: var(--plaster);
-}
+  /* ---------------- surfaces ---------------- */
 
-/* ---------------- type ---------------- */
+  .plaster-surface {
+    background-color: var(--plaster);
+    background-image: url("/textures/e4-plaster.webp");
+    background-size: 640px 640px;
+  }
 
-.display {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 0.92;
-}
+  .blueprint-grid {
+    background-image:
+      linear-gradient(var(--grid-line, var(--line)) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line, var(--line)) 1px, transparent 1px);
+    background-size: var(--grid-size, 48px) var(--grid-size, 48px);
+  }
 
-.annot {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.4;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
+  .blueprint-grid-faint {
+    --grid-line: rgba(20, 20, 20, 0.055);
+  }
 
-/* ---------------- surfaces ---------------- */
+  .on-ink .blueprint-grid-faint,
+  .blueprint-grid-faint.on-ink {
+    --grid-line: rgba(244, 241, 236, 0.045);
+  }
 
-.plaster-surface {
-  background-color: var(--plaster);
-  background-image: url("/textures/e4-plaster.webp");
-  background-size: 640px 640px;
-}
+  /* Film grain on one fixed, non-interactive layer (never on scrolling content) */
+  .grain {
+    position: fixed;
+    inset: -50%;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
 
-.blueprint-grid {
-  background-image:
-    linear-gradient(var(--grid-line, var(--line)) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line, var(--line)) 1px, transparent 1px);
-  background-size: var(--grid-size, 48px) var(--grid-size, 48px);
-}
+  /* ---------------- framed print ---------------- */
 
-.blueprint-grid-faint {
-  --grid-line: rgba(20, 20, 20, 0.055);
-}
+  .print {
+    position: relative;
+    background: #faf8f4;
+    padding: clamp(8px, 1.1vw, 14px);
+    box-shadow:
+      0 1px 0 rgba(20, 20, 20, 0.06),
+      0 18px 40px -18px rgba(40, 28, 16, 0.38),
+      0 2px 6px rgba(40, 28, 16, 0.08);
+  }
+  .print img {
+    display: block;
+    filter: sepia(0.08) saturate(0.92) contrast(1.04) brightness(1.01);
+  }
+  .print::after {
+    /* warm grade + faint grain inside the photo window */
+    content: "";
+    position: absolute;
+    inset: clamp(8px, 1.1vw, 14px);
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255, 236, 210, 0.07), rgba(60, 40, 20, 0.08)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
 
-.on-ink .blueprint-grid-faint,
-.blueprint-grid-faint.on-ink {
-  --grid-line: rgba(244, 241, 236, 0.045);
-}
+  /* ---------------- buttons ---------------- */
 
-/* Film grain on one fixed, non-interactive layer (never on scrolling content) */
-.grain {
-  position: fixed;
-  inset: -50%;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  mix-blend-mode: multiply;
-}
+  .btn-red {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    min-height: 48px;
+    padding: 0 1.4em;
+    background: var(--red);
+    color: var(--plaster);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.005em;
+    white-space: nowrap;
+    transition:
+      background-color 0.35s var(--ease-arch),
+      transform 0.35s var(--ease-arch);
+  }
+  .btn-red:hover {
+    background: var(--red-press);
+  }
+  .btn-red:active {
+    transform: translateY(1px);
+  }
+  .btn-red .btn-arrow {
+    transition: transform 0.45s var(--ease-arch);
+  }
+  .btn-red:hover .btn-arrow {
+    transform: translateX(4px);
+  }
 
-/* ---------------- framed print ---------------- */
+  /* ---------------- confirm + render tokens ---------------- */
 
-.print {
-  position: relative;
-  background: #faf8f4;
-  padding: clamp(8px, 1.1vw, 14px);
-  box-shadow:
-    0 1px 0 rgba(20, 20, 20, 0.06),
-    0 18px 40px -18px rgba(40, 28, 16, 0.38),
-    0 2px 6px rgba(40, 28, 16, 0.08);
-}
-.print img {
-  display: block;
-  filter: sepia(0.08) saturate(0.92) contrast(1.04) brightness(1.01);
-}
-.print::after {
-  /* warm grade + faint grain inside the photo window */
-  content: "";
-  position: absolute;
-  inset: clamp(8px, 1.1vw, 14px);
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(255, 236, 210, 0.07), rgba(60, 40, 20, 0.08)),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  mix-blend-mode: multiply;
-  opacity: 0.55;
-}
-
-/* ---------------- buttons ---------------- */
-
-.btn-red {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6em;
-  min-height: 48px;
-  padding: 0 1.4em;
-  background: var(--red);
-  color: var(--plaster);
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 0.005em;
-  white-space: nowrap;
-  transition:
-    background-color 0.35s var(--ease-arch),
-    transform 0.35s var(--ease-arch);
-}
-.btn-red:hover {
-  background: var(--red-press);
-}
-.btn-red:active {
-  transform: translateY(1px);
-}
-.btn-red .btn-arrow {
-  transition: transform 0.45s var(--ease-arch);
-}
-.btn-red:hover .btn-arrow {
-  transform: translateX(4px);
-}
-
-/* ---------------- confirm + render tokens ---------------- */
-
-.confirm-token {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.4em;
-  vertical-align: baseline;
-}
-.confirm-token__tag {
-  font-family: var(--font-mono);
-  font-size: 0.62em;
-  letter-spacing: 0.06em;
-  padding: 0.1em 0.45em;
-  border: 1px dashed currentColor;
-  opacity: 0.85;
-  white-space: nowrap;
-  transform: translateY(-0.15em);
+  .confirm-token {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    vertical-align: baseline;
+  }
+  .confirm-token__tag {
+    font-family: var(--font-mono);
+    font-size: min(0.62em, 13px);
+    letter-spacing: 0.06em;
+    padding: 0.1em 0.45em;
+    border: 1px dashed currentColor;
+    opacity: 0.85;
+    white-space: nowrap;
+    transform: translateY(-0.15em);
+  }
 }
 
 /* ---------------- motion safety ---------------- */
@@ -363,5 +370,99 @@ html.lenis body {
   }
   .hero-static-end {
     display: block;
+  }
+}
+
+/* ---------------- line drawings that draw on enter ---------------- */
+/* Add data-drawn to an ancestor (useDrawOnView) to draw every .draw path inside. */
+
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.8s var(--ease-slow);
+  transition-delay: calc(var(--d, 0) * 1ms);
+}
+[data-drawn] .draw {
+  stroke-dashoffset: 0;
+}
+.draw-fade {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  transition-delay: calc(var(--d, 0) * 1ms);
+}
+[data-drawn] .draw-fade {
+  opacity: 1;
+}
+.ink-lines {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linecap: square;
+}
+.ink-lines .k {
+  stroke-width: 2.2;
+}
+.ink-lines .l {
+  stroke: rgba(20, 20, 20, 0.45);
+}
+.ink-lines .r {
+  stroke: var(--red);
+  stroke-width: 1.8;
+}
+.ink-lines .dash {
+  stroke-dasharray: 6 5;
+}
+.ink-lines text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  fill: rgba(20, 20, 20, 0.7);
+  stroke: none;
+}
+
+/* words that rise into place */
+.rise-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.rise-word {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 1.1s var(--ease-arch);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+[data-drawn] .rise-word {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw {
+    stroke-dashoffset: 0 !important;
+    transition: none;
+  }
+  .draw-fade,
+  .rise-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+}
+
+/* process drawing labels need a larger viewBox font on small screens */
+@media (max-width: 1023px) {
+  .process svg text {
+    font-size: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .collection-track {
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+  }
+  #ceilings {
+    height: auto !important;
   }
 }

@@ -42,7 +42,7 @@ function validate(v: Values): Errors {
 }
 
 const fieldBase =
-  "w-full border-0 border-b border-line-strong bg-transparent px-0 py-3 text-[17px] text-ink placeholder:text-ink/40 transition-colors focus:border-ink focus:outline-none focus-visible:outline-none";
+  "w-full border-0 border-b border-line-strong bg-transparent px-0 py-3 text-[17px] text-ink placeholder:text-ink/60 transition-colors focus:border-ink focus:outline-none focus-visible:outline-none";
 
 export function ConsultForm({
   preselect,
@@ -120,8 +120,8 @@ export function ConsultForm({
         </svg>
         <h3 className="display mt-8 text-[clamp(2.4rem,5vw,3.6rem)]">Thank you, {first}.</h3>
         <p className="mt-5 max-w-[42ch] text-[18px] leading-relaxed">
-          <Confirm>We&apos;ll call you within one business day</Confirm> to talk through your
-          project. If it can&apos;t wait, call the office at{" "}
+          <Confirm>We’ll call you within one business day</Confirm> to talk through your
+          project. If it can’t wait, call the office at{" "}
           <a href={business.phone.href} className="underline decoration-red underline-offset-4">
             {business.phone.display}
           </a>
@@ -143,7 +143,7 @@ export function ConsultForm({
     <form onSubmit={onSubmit} noValidate className="grid gap-9">
       <fieldset>
         <legend id={id("role")} tabIndex={-1} className="annot text-muted">
-          I&apos;m a
+          I’m a
         </legend>
         <div className="mt-3 grid grid-cols-3 border border-line-strong" role="radiogroup" aria-labelledby={id("role")}>
           {roles.map((r, i) => {
@@ -266,7 +266,7 @@ export function ConsultForm({
           rows={4}
           value={values.message}
           onChange={(e) => set("message", e.target.value)}
-          placeholder="The room, the style of home, anything you've seen and liked."
+          placeholder="The room, the style of home, anything you’ve seen and liked."
           className={`${fieldBase} resize-y`}
         />
       </div>

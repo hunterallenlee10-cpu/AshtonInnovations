@@ -38,7 +38,7 @@ function Plan() {
       <rect className="rcp-line" pathLength={1} style={{ ["--d" as string]: 0 }} x={80} y={40} width={1760} height={1010} />
       <rect className="rcp-line rcp-dim" pathLength={1} style={{ ["--d" as string]: 120 }} x={100} y={60} width={1720} height={970} />
 
-      {/* outer tray: edge + crown moulding band */}
+      {/* outer tray: edge + crown molding band */}
       <polygon className="rcp-line rcp-key" pathLength={1} style={{ ["--d" as string]: 260 }} points={octPoints(OUTER)} />
       <polygon className="rcp-line rcp-dim" pathLength={1} style={{ ["--d" as string]: 420 }} points={octPoints(OUTER, 16)} />
       <polygon className="rcp-line rcp-dim" pathLength={1} style={{ ["--d" as string]: 520 }} points={octPoints(OUTER, 34)} />
@@ -67,7 +67,7 @@ function Plan() {
         );
       })}
 
-      {/* centre lines */}
+      {/* center lines */}
       <path className="rcp-fade rcp-center" style={{ ["--d" as string]: 1250 }} d={`M${MED.x} 70 V1020 M110 ${MED.y} H1810`} />
 
       {/* dimensions */}
@@ -91,14 +91,14 @@ function Plan() {
 
       {/* labels (hidden on small screens via CSS) */}
       <g className="rcp-labels rcp-fade" style={{ ["--d" as string]: 1700 }}>
-        <text x={957.5} y={70} textAnchor="middle">16&apos;-0&quot;</text>
-        <text x={957.5} y={1042} textAnchor="middle">12&apos;-6&quot; INNER TRAY</text>
-        <text x={132} y={560} textAnchor="middle" transform="rotate(-90 132 560)">11&apos;-0&quot;</text>
+        <text x={957.5} y={70} textAnchor="middle">16′-0″</text>
+        <text x={957.5} y={1042} textAnchor="middle">12′-6″ INNER TRAY</text>
+        <text x={132} y={560} textAnchor="middle" transform="rotate(-90 132 560)">11′-0″</text>
         <text x={1868} y={552} textAnchor="middle" className="rcp-small">A</text>
         <text x={1868} y={575} textAnchor="middle" className="rcp-small">A-3</text>
 
         <path className="rcp-line rcp-static" d="M318 222 L262 176 H118" />
-        <text x={120} y={168}>CROWN MOULDING, TYP.</text>
+        <text x={120} y={168}>CROWN MOLDING, TYP.</text>
 
         <path className="rcp-line rcp-static" d="M1300 300 L1372 222 H1560" />
         <text x={1378} y={214}>LED COVE, HIDDEN</text>
@@ -108,9 +108,9 @@ function Plan() {
 
         <g>
           <rect className="rcp-line rcp-static" x={566} y={154} width={128} height={30} />
-          <text x={630} y={175} textAnchor="middle">CLG +10&apos;-0&quot;</text>
+          <text x={630} y={175} textAnchor="middle">CLG +10′-0″</text>
           <rect className="rcp-line rcp-static" x={566} y={322} width={128} height={30} />
-          <text x={630} y={343} textAnchor="middle">TRAY +11&apos;-6&quot;</text>
+          <text x={630} y={343} textAnchor="middle">TRAY +11′-6″</text>
         </g>
       </g>
     </>
