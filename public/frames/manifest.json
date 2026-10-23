@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "desktop": { "count": 241, "width": 1920, "height": 1080, "path": "/frames/desktop/f_", "ext": ".webp", "pad": 4, "kb": 11152 },
+  "mobile": { "count": 241, "width": 720, "height": 1280, "path": "/frames/mobile/f_", "ext": ".webp", "pad": 4, "kb": 6600 }
+}
