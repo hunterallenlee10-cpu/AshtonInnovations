@@ -247,7 +247,8 @@ The brief's phase list doesn't name sections 3, 11 and 12, so I placed them wher
 - [x] Impeccable `detect` run + taste-skill pre-flight checklist (em dashes, eyebrow count, CTA wrap, duplicate CTAs, etc.)
 - [x] Copy audit: every real fact matches the brief word for word; every unknown is a visible `{{CONFIRM}}`; every AI visual is labelled
 - [x] Hand-off notes: list of every `{{CONFIRM}}`, every photo slot, and what to swap for production
-- [x] Final QA gate > tick > commit > push > Vercel preview
+- [x] Final QA gate > tick > commit > push
+- [ ] Vercel preview: **blocked.** The Vercel connector is signed in as `bh798366@gmail.com` (a member of the "leu" team without permission to create projects); both a Git-linked project and a direct deployment returned 403. Import the repo in Vercel yourself, or give that account project permissions, and I can deploy.
 
 ---
 
