@@ -9,7 +9,7 @@ import { List, Phone, X } from "@phosphor-icons/react/dist/ssr";
 import { business, navLinks } from "@/data/business";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { CtaButton } from "@/components/consult/CtaButton";
-import { scrollToTarget, setScrollLocked } from "@/components/providers/SmoothScroll";
+import { onHomeLinkClick, scrollToTarget, setScrollLocked } from "@/components/providers/SmoothScroll";
 
 export function Nav() {
   const navRef = useRef<HTMLElement>(null);
@@ -79,7 +79,12 @@ export function Nav() {
           aria-label="Main"
           className="relative mx-auto flex h-[var(--nav-h)] items-center justify-between gap-6 px-[var(--gutter)]"
         >
-          <Link href="/" className="-my-2 flex min-h-11 items-center py-2" aria-label="Ashton Innovations, home">
+          <Link
+            href="/"
+            onClick={(e) => onHomeLinkClick(e, pathname)}
+            className="-my-2 flex min-h-11 items-center py-2"
+            aria-label="Ashton Innovations, home"
+          >
             <Wordmark />
           </Link>
 
