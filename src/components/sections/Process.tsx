@@ -100,6 +100,14 @@ export function Process() {
     const mm = gsap.matchMedia(el);
     // Desktop: pin the section and build the wall layer by layer, then pan to the floor.
     mm.add("(min-width: 1024px)", () => {
+      // Pan offset (px) that puts a drawing y (viewBox units) `margin` px above the
+      // bottom of the frame. Measured live, so it holds at any screen height.
+      const pan = q<HTMLElement>("[data-pan]")[0];
+      const panTo = (viewBoxY: number, margin: number) => () => {
+        const frame = pan.parentElement?.clientHeight ?? window.innerHeight;
+        const scale = pan.offsetHeight / 1180;
+        return Math.min(0, frame - margin - pan.offsetTop - viewBoxY * scale);
+      };
       gsap.set(q(".proc"), { strokeDasharray: 1, strokeDashoffset: 1 });
       gsap.set(q(".proc-label"), { autoAlpha: 0 });
 
@@ -130,8 +138,10 @@ export function Process() {
         tl.to(q(`.proc[data-step="${s.key}"]`), { strokeDashoffset: 0, duration: slot * 0.8, stagger: slot * 0.08 }, at);
         tl.to(q(`.proc-label[data-step="${s.key}"]`), { autoAlpha: 1, duration: slot * 0.3 }, at + slot * 0.35);
       });
+      // drift down while the layers build, so each new label lands on screen
+      tl.to(pan, { y: panTo(884, 140), duration: 0.84 }, 0);
       // last beat: pan down to the floor line, leading into the epoxy section
-      tl.to(q("[data-pan]"), { yPercent: -34, duration: 0.14, ease: "power2.inOut" }, 0.86);
+      tl.to(pan, { y: panTo(1100, 80), duration: 0.14, ease: "power2.inOut" }, 0.86);
       tl.to(q('.proc[data-step="floor"]'), { strokeDashoffset: 0, duration: 0.1 }, 0.88);
       tl.to(q('.proc-label[data-step="floor"]'), { autoAlpha: 1, duration: 0.06 }, 0.93);
     });
@@ -161,24 +171,25 @@ export function Process() {
       aria-labelledby="process-title"
       className="process plaster-surface relative overflow-hidden"
     >
-      <div className="relative mx-auto grid max-w-[1440px] gap-x-[clamp(32px,6vw,96px)] px-[var(--gutter)] lg:h-[100dvh] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-        <div className="flex flex-col justify-center pb-8 pt-[clamp(96px,12vw,140px)] lg:py-[calc(var(--nav-h)+24px)]">
-          <h2 id="process-title" className="display text-[clamp(3rem,5.6vw,5.8rem)] leading-[0.94]">
+      <div className="relative mx-auto grid max-w-[1440px] gap-x-[clamp(32px,6vw,96px)] px-[var(--gutter)] lg:min-h-[100dvh] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+        {/* Desktop sizes scale with screen height so the whole column fits inside the pinned screen. */}
+        <div className="flex flex-col justify-center pb-8 pt-[clamp(96px,12vw,140px)] lg:pb-[clamp(20px,4dvh,48px)] lg:pt-[calc(var(--nav-h)+clamp(8px,2.2dvh,24px))]">
+          <h2 id="process-title" className="display text-[clamp(3rem,5.6vw,5.8rem)] leading-[0.94] lg:text-[length:clamp(2.75rem,min(5.6vw,8.6dvh),5.8rem)]">
             From blueprint
             <br />
             to finish.
           </h2>
-          <ol className="mt-10 max-w-[30rem] border-t border-line max-lg:hidden">
+          <ol className="mt-[clamp(16px,3.7dvh,40px)] max-w-[30rem] border-t border-line max-lg:hidden">
             {STEPS.map((s, i) => (
               <li
                 key={s.key}
                 data-step-item
                 data-active={i === 0 ? "" : undefined}
-                className="group border-b border-line py-3 text-muted transition-colors duration-500 data-[active]:text-ink"
+                className="group border-b border-line py-[clamp(6px,1.1dvh,12px)] text-muted transition-colors duration-500 data-[active]:text-ink"
               >
                 <div className="flex items-baseline gap-4">
                   <span className="mt-[0.45em] h-px w-5 shrink-0 bg-line-strong transition-[background-color] duration-500 group-data-[active]:bg-red" aria-hidden="true" />
-                  <span className="text-[19px] font-medium">{s.name}</span>
+                  <span className="text-[length:clamp(17px,2.2dvh,19px)] font-medium">{s.name}</span>
                 </div>
                 <p className="grid grid-rows-[0fr] pl-9 text-[15px] leading-relaxed opacity-0 transition-[grid-template-rows,opacity] duration-500 group-data-[active]:grid-rows-[1fr] group-data-[active]:opacity-100 [[data-static]_&]:grid-rows-[1fr] [[data-static]_&]:opacity-100">
                   <span className="min-h-0 overflow-hidden pt-1">{s.text}</span>
@@ -186,7 +197,7 @@ export function Process() {
               </li>
             ))}
           </ol>
-          <div className="mt-10 grid max-w-[30rem] grid-cols-[96px_1fr] items-start gap-5 max-lg:hidden">
+          <div className="mt-[clamp(16px,3.7dvh,40px)] grid max-w-[30rem] grid-cols-[clamp(64px,8.9dvh,96px)_1fr] items-start gap-5 max-lg:hidden">
             <FramedPrint photo={crew} sizes="96px" caption={false} />
             <p className="text-[15px] leading-relaxed text-muted">
               <span className="text-ink">Every crew member wears a hard hat on entering a home.</span>{" "}

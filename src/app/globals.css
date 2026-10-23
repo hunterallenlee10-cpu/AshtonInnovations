@@ -465,4 +465,9 @@
   #ceilings {
     height: auto !important;
   }
+  /* no pin or pan without motion: the wall drawing sits in the flow and the section grows to show all of it */
+  #process [data-pan] {
+    position: static;
+    padding-block: calc(var(--nav-h) + 24px) 48px;
+  }
 }
