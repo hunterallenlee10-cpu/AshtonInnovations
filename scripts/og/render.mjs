@@ -1,0 +1,14 @@
+import { chromium } from "/opt/node22/lib/node_modules/playwright/index.mjs";
+import path from "node:path";
+const dir = path.dirname(new URL(import.meta.url).pathname);
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1200, height: 630 } });
+await p.goto("file://" + path.join(dir, "og.html"), { waitUntil: "networkidle" });
+await p.evaluate(() => document.fonts.ready);
+await p.waitForTimeout(400);
+await p.screenshot({ path: path.join(dir, "../../public/og-image.png") });
+const q = await b.newPage({ viewport: { width: 512, height: 512 } });
+await q.goto("file://" + path.join(dir, "icon.html"));
+await q.screenshot({ path: path.join(dir, "icon-512.png") });
+await b.close();
+console.log("rendered");

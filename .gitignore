@@ -1,0 +1,26 @@
+# deps / build
+node_modules
+.next
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# env
+.env*
+
+# generated media working files (raw downloads are re-fetchable by job id)
+/assets/raw
+
+# misc
+.DS_Store
+npm-debug.log*
+.vercel
+
+# review artefacts (reproducible from scripts)
+/assets/compare
+/assets/crops
+/assets/tile_preview_*
+
+# QA screenshots and reports (regenerate with scripts/qa.mjs)
+/qa

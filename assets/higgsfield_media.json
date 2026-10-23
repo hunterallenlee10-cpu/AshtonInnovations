@@ -1,0 +1,41 @@
+{
+  "imports": {
+    "01": "274607b4-92e6-44d8-a9e6-0b42acdec01e",
+    "12": "6b5ba023-a834-4ea6-b2cf-6685ebd91ad5",
+    "sculptured": "fb4f863f-3ab2-43f5-97ee-bb05480e8320",
+    "21": "259ced51-c7cb-468b-a609-cc7edef907a3",
+    "dd3": "b2d84866-1311-4f97-874f-da079d745309",
+    "20": "ff6a2d43-5a04-4bdf-889a-ae25017686cc",
+    "19": "968b04f7-00fe-4031-be1f-0ee6e1f13f92",
+    "medalion": "9c49901f-7bcb-4c30-9f62-fd7d5de52a43",
+    "10": "10238942-5bd2-4b1f-8725-ab9f2861b8c7",
+    "18": "dd64ddcb-bb16-45ae-8b05-2c9e33564bcc",
+    "16": "3b0eb395-5d05-482e-adec-4a16237d0b92",
+    "14": "d87daab1-7879-4e75-a271-7bdcef2a1bea",
+    "09": "4edeae8e-cb01-4811-8630-49d71aa22f8c",
+    "35": "023cac9a-5dad-4042-9bd6-cb5dadf7779e",
+    "28": "29d28e72-6dc3-45f0-997c-577d1edcfec5",
+    "24": "86cf5455-980e-45b0-a1ee-1e1b80471e03",
+    "dbloct1": "a01fc74c-9c88-42e8-8342-76c06c3713d9",
+    "dbloct2": "0a70daa0-9efe-483e-abfe-31a075fea5b6",
+    "04": "17fde1bd-73cb-4754-8aa9-bd7df98a20e2",
+    "02": "44624ee3-6183-410e-b8c6-f0fbc2a9c021",
+    "arch1": "5e4ac589-cc7a-4790-86f9-25dfd0447f23",
+    "arch2": "9f256e4e-8c9d-4cbe-953a-a128bff1949d",
+    "arch3": "212da58c-047c-4dd9-a069-3f17c714de16",
+    "drywall1": "11860194-ddce-4f88-8697-7d82f5b4640e",
+    "drywall2": "c948cda7-914c-47f7-94c9-8c1e1332631b",
+    "drywall3": "b3775725-c2fc-427e-a606-348461ab698c",
+    "drywall4": "3d866371-7062-43f7-bdf2-aaf5e564fb8c",
+    "drywall5": "7b820f73-30ef-4694-9776-81ecf7fa5aa4",
+    "drywall6": "81773bf5-4d5a-45fd-9cf4-74f0ef681d57",
+    "paint1": "c09bfb92-29d4-42dc-973d-25052812b639",
+    "paint2": "205b2d8e-9adf-4c51-ad73-2733064128e3",
+    "paint3": "1116c34d-cbf7-41b7-a5fa-cb1ba2a77cda",
+    "paint4": "caaab0e4-3e22-4bcb-a644-3fef0925c0d9",
+    "truck": "851e0921-8584-43bb-bfb2-d3aa1f9b8ffa"
+  },
+  "upscales": {
+    "01": "4e832509-e537-49f1-a606-13633465a086"
+  }
+}

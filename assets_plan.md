@@ -1,7 +1,6 @@
 # Assets Plan (Phase 0)
 
-Status: **waiting for your approval. Nothing has been generated and 0 credits are spent.**
-The only Higgsfield action so far was importing the public `01.jpg` once, because the upscaler only gives a price quote against a real uploaded image.
+Status: **approved and generated** (2026-10-23). See the generation log at the end for actual spend and every job.
 
 - Balance: **1,210 credits** (Plus plan), checked 2026-10-23.
 - All prices below are live `get_cost` quotes from 2026-10-23. I re-quote before each batch.
@@ -219,13 +218,85 @@ If Kling 4.0 wins the A/B, subtract about 22.5. Unused buffer is simply not spen
 
 ## Generation log
 
-Every job is logged here: model, prompt ID (section above), settings, job ID, credits, verdict, output file. Raw files go to `/assets/raw/` (gitignored, re-downloadable by job ID).
+Status: **generation complete.** All prices are what the transaction log actually charged.
 
+### Spend summary (from the Higgsfield transaction log)
+- Starting balance 1,210. Balance after all work: **821.75** (388.25 spent on the account).
+- **This build: about 165.5 credits** (photo upscales about 74 with 3 refunds, stills about 32, videos 82.5). That is under the ~225 recommended budget.
+- **About 223 credits were spent by something else on the same account during this session**: 50 "Nano Banana Pro" images (05:30 to 05:46 UTC; this build never used that model) and 9 Kling 3.0 / 4.0 videos at times this build submitted nothing (05:35, 05:42, 05:46, 05:49 UTC). Those jobs also caused the early "rate limit" errors. Worth checking who else is using the account.
+
+### Decisions
+- Video model: **Kling 4.0** won the Clip 1 A/B (clean locked camera; Kling 3.0 drew a "keyhole" artefact and moved late) and made both hero clips and the final D2. D1 (loop) and the first D2 were made on Kling 3.0 before the A/B finished.
+- KF3: clipped-corner draft (seed 201) chosen; it rhymes with the real `01.jpg`.
+- Portrait/mobile frames: the 16:9 clips rotated 90 degrees (your choice; 0 credits).
+- D2 v1 rejected (morphed instead of tilting, glowing neon crack); v2 accepted.
+- Photo 24: upscale rejected (it changed a small ceiling rosette); the plain crop is used.
+
+### Job log
 | Date | Asset | Model / tool | Settings | Job / media ID | Credits | Verdict | Output |
 |---|---|---|---|---|---|---|---|
-| 2026-10-23 | `01.jpg` import (for the upscale quote only) | `media_import_url` | public URL | media `274607b4-92e6-44d8-a9e6-0b42acdec01e` | 0 | n/a | none |
+| 2026-10-23 | 01.jpg import | media_import_url | public URL | media:274607b4-92e6-44d8-a9e6-0b42acdec01e | 0 | n/a | - |
+| 2026-10-23 | 33 photo imports | media_import_url | public URLs | see assets/higgsfield_media.json | 0 | n/a | - |
+| 2026-10-23 | upscale 01 | bytedance_image_upscale | 2k | 4e832509-e537-49f1-a606-13633465a086 | 2 | accepted | assets/raw/upscale/01.png |
+| 2026-10-23 | upscale 12 | bytedance_image_upscale | 2k | 36741432-f237-42b8-b58e-04cbf0dd7748 | 2 | accepted | assets/raw/upscale/12.png |
+| 2026-10-23 | upscale sculptured | bytedance_image_upscale | 2k | a4d6ae9d-223a-4ea7-b10d-c8bb02f450b3 | 2 | accepted | assets/raw/upscale/sculptured.png |
+| 2026-10-23 | upscale 21 | bytedance_image_upscale | 2k | 2fb92039-22c8-4598-b493-5bae5ddefd0b | 2 | accepted | assets/raw/upscale/21.png |
+| 2026-10-23 | upscale dd3 | bytedance_image_upscale | 2k | 5b3ee8d9-a1db-4b7f-9798-c612fc0d9d51 | 2 | accepted | assets/raw/upscale/dd3.png |
+| 2026-10-23 | upscale 20 | bytedance_image_upscale | 2k | efa8b120-a03f-4d9f-b264-9cb0c6b9bd57 | 2 | accepted | assets/raw/upscale/20.png |
+| 2026-10-23 | upscale 19 | bytedance_image_upscale | 2k | cc6d8298-da6b-46fd-a67b-3be9323ff0ca | 2 | accepted | assets/raw/upscale/19.png |
+| 2026-10-23 | upscale medalion | bytedance_image_upscale | 2k | 11c19bf1-4552-4415-a855-e5959885d625 | 2 | accepted | assets/raw/upscale/medalion.png |
+| 2026-10-23 | upscale 10 | bytedance_image_upscale | 2k | 7ed02beb-d419-4337-8fb0-68621a3e86de | 2 | accepted | assets/raw/upscale/10.png |
+| 2026-10-23 | upscale 18 | bytedance_image_upscale | 2k | 528b1550-0a91-4075-8eca-fa2b161562fd | 2 | pending | - |
+| 2026-10-23 | upscale 16 | bytedance_image_upscale | 2k | 8aa51389-c953-4a22-903c-ed4b6d0540d3 | 2 | failed (refunded), retried as 2ed61b01 | - |
+| 2026-10-23 | upscale 14 | bytedance_image_upscale | 2k | 2b192f86-265b-411f-bbed-5a2346f9ebfe | 2 | pending | - |
+| 2026-10-23 | upscale 09 | bytedance_image_upscale | 2k | 22feb64e-75da-42e8-b3e0-fed8b72c616a | 2 | pending | - |
+| 2026-10-23 | B1 KF3 draft square s101 | nano_banana_2_1 | 16:9 1k seed 101 | 0ba8aba0-aab0-42d5-b299-0700d5090faf | 1.5 | not chosen | assets/raw/kf/kf3_draft_sq_101.png |
+| 2026-10-23 | B1 KF3 draft clipped s201 | nano_banana_2_1 | 16:9 1k seed 201 | 1958f51d-01a5-44cf-8219-302e190aa0e5 | 1.5 | CHOSEN (deepest two-step read, rhymes with 01.jpg) | assets/raw/kf/kf3_draft_clip_201.png |
+| 2026-10-23 | B1 KF3 draft clipped s202 | nano_banana_2_1 | 16:9 1k seed 202 | 650afcba-fd29-4b61-b088-e64fa45df093 | 1.5 | not chosen (glow on both trays flattens depth) | assets/raw/kf/kf3_draft_clip_202.png |
+| 2026-10-23 | B2 KF3 final | bytedance_image_upscale | 4k of s201 | c538deb7-7aa3-42df-8222-a109155c2399 | 2 | pending | - |
+| 2026-10-23 | D2a coffered start s1001 | nano_banana_2_1 | 16:9 2k seed 1001 | b36eb109-a490-4669-9349-551e672e7f85 | 2 | CHOSEN (second candidate skipped, saves 2) | assets/raw/d2/d2a_1001.png |
+| 2026-10-23 | E3 metallic s701 | nano_banana_2_1 | 1:1 2k seed 701 | 19baeaf1-93bc-4c53-85a6-873fa8ba5958 | 2 | not chosen | assets/raw/tex/e3_701.png |
+| 2026-10-23 | E3 metallic s702 | nano_banana_2_1 | 1:1 2k seed 702 | 5d9c1438-7356-48b9-8de7-95c22abdc9bd | 2 | CHOSEN (deeper blacks) | assets/raw/tex/e3_702.png |
+| 2026-10-23 | D1a loop key s401 | nano_banana_2_1 | 16:9 2k | 1988b168-2cca-4d6b-8651-6abdba6fce36 | 2 | not chosen | assets/raw/d1/d1a_401.png |
+| 2026-10-23 | D1a loop key s402 | nano_banana_2_1 | 16:9 2k | c21a5933-ab67-4739-a508-0c18009555c4 | 2 | CHOSEN | assets/raw/d1/d1a_402.png |
+| 2026-10-23 | E2 flake s601 | nano_banana_2_1 | 1:1 2k seed 601 | 1455e0c8-6007-4299-a238-e5208270625e | 0? | NSFW false positive, retried as s603 | - |
+| 2026-10-23 | E2 flake s603 | nano_banana_2_1 | 1:1 2k | f8716f90-5e32-4ac0-826c-955c5806b2b7 | 2 | CHOSEN | public/textures/e2-flake.* |
+| 2026-10-23 | D2b floor end (edit of D2a) | nano_banana_2_1 | 16:9 2k | a69aad6b-78fb-470f-88a0-56f93bad584d | 2 | CHOSEN | assets/raw/d2/d2b_1101.png |
+| 2026-10-23 | upscale 35 | bytedance_image_upscale | 2k | bc826e89-dd2a-450a-98c3-d24a70261e8b | 2 | accepted | assets/raw/upscale/35.png |
+| 2026-10-23 | upscale 28 | bytedance_image_upscale | 2k | 15a87763-471a-46b5-86d0-5b5f072a90f6 | 2 | accepted | assets/raw/upscale/28.png |
+| 2026-10-23 | upscale 24 | bytedance_image_upscale | 2k | 8dafc57d-6839-47b1-8846-53e1a3aa0320 | 2 | REJECTED (changed ceiling rosette); original crop used | assets/raw/upscale/24.png |
+| 2026-10-23 | upscale 16 | bytedance_image_upscale | 2k | 2ed61b01-186b-422b-9b06-d72aa4420258 | 2 | accepted | assets/raw/upscale/16.png |
+| 2026-10-23 | upscale dbloct1 | bytedance_image_upscale | 2k | 20c7e53a-8529-41ee-8d68-2798c319dee4 | 2 | accepted | assets/raw/upscale/dbloct1.png |
+| 2026-10-23 | upscale dbloct2 | bytedance_image_upscale | 2k | 667ea222-d07d-451e-9da7-ddc411742a78 | 2 | accepted | assets/raw/upscale/dbloct2.png |
+| 2026-10-23 | upscale 04 | bytedance_image_upscale | 2k | 1cf5514e-b842-4426-8b17-413bfeb617bd | 2 | accepted | assets/raw/upscale/04.png |
+| 2026-10-23 | upscale arch1 | bytedance_image_upscale | 2k | d9062e06-433a-4455-908a-c8357d1e6c72 | 2 | accepted | assets/raw/upscale/arch1.png |
+| 2026-10-23 | upscale 02 | bytedance_image_upscale | 2k | 6a504e74-0fdd-4147-921e-d89a937587f9 | 2 | accepted | assets/raw/upscale/02.png |
+| 2026-10-23 | upscale arch2 | bytedance_image_upscale | 2k | 383177d1-504d-4f0e-b48b-f81b268d30d3 | 2 | accepted | assets/raw/upscale/arch2.png |
+| 2026-10-23 | upscale arch3 | bytedance_image_upscale | 2k | 5b8fc471-ed98-4f83-939b-5be9b51581c4 | 2 | accepted | assets/raw/upscale/arch3.png |
+| 2026-10-23 | upscale drywall1 | bytedance_image_upscale | 2k | 528e34ac-096a-4c45-950f-ab9e3bce21d1 | 2 | accepted | assets/raw/upscale/drywall1.png |
+| 2026-10-23 | upscale drywall2 | bytedance_image_upscale | 2k | ef2b9fb1-3059-433e-9bf9-74dcf3a68455 | 2 | accepted | assets/raw/upscale/drywall2.png |
+| 2026-10-23 | upscale drywall4 | bytedance_image_upscale | 2k | c56890fc-ed59-46d2-8b61-98622b796b68 | 2 | accepted | assets/raw/upscale/drywall4.png |
+| 2026-10-23 | upscale drywall3 | bytedance_image_upscale | 2k | 35401a84-9e5c-4a7f-bd80-bcc10275757e | 2 | accepted | assets/raw/upscale/drywall3.png |
+| 2026-10-23 | upscale drywall5 | bytedance_image_upscale | 2k | 31713fbf-d505-4dda-8f19-cddd35801ebd | 2 | accepted | assets/raw/upscale/drywall5.png |
+| 2026-10-23 | upscale drywall6 | bytedance_image_upscale | 2k | 32bb8527-2e5c-49a7-8f6f-d9bc6315a75c | 2 | accepted | assets/raw/upscale/drywall6.png |
+| 2026-10-23 | upscale paint1 | bytedance_image_upscale | 2k | 2ecd094d-9b4e-4165-8ab0-fe6fbe49fbc9 | 2 | accepted | assets/raw/upscale/paint1.png |
+| 2026-10-23 | upscale paint3 | bytedance_image_upscale | 2k | 9b269f88-fbd5-4adb-bfbe-d216377b0b40 | 2 | accepted | assets/raw/upscale/paint3.png |
+| 2026-10-23 | upscale paint4 | bytedance_image_upscale | 2k | 900fd095-21f1-4c67-8af7-e294972c8c91 | 2 | accepted | assets/raw/upscale/paint4.png |
+| 2026-10-23 | upscale truck | bytedance_image_upscale | 2k | 66811d3b-67d8-4ce7-8bd1-d3daf769f90b | 2 | accepted | assets/raw/upscale/truck.png |
+| 2026-10-23 | upscale paint2 | bytedance_image_upscale | 2k | 9c98a4d1-6858-4d8a-851d-7b4847a633b9 | 2 | accepted | assets/raw/upscale/paint2.png |
+| 2026-10-23 | C0 A/B clip1 Kling 4.0 720p | kling4_0 | 5s 720p | 20aa5446-a864-4c98-a52c-e7549adb1d01 | 2.5 | WINNER (clean, locked) | assets/raw/video/c1_kling4_720.mp4 |
+| 2026-10-23 | C0 A/B clip1 Kling 3.0 std | kling3_0 | 5s std silent | c1da620e-aa7d-4f88-bb94-0b9b4098ef4b | 7.5 | lost (keyhole artefact, late motion) | assets/raw/video/c1_kling3_std.mp4 |
+| 2026-10-23 | C1 clip1 final KF1>KF2 | kling4_0 | 5s 1080p | 3f1f011a-8b8f-4f95-8108-b0e864898392 | 5 | ACCEPTED | assets/raw/video/c1_kling4_1080.mp4 |
+| 2026-10-23 | C2 clip2 final KF2>KF3 | kling4_0 | 5s 1080p | 7c14143d-f5d8-4209-8b72-d1126c4155b2 | 5 | ACCEPTED | assets/raw/video/c2_kling4_1080.mp4 |
+| 2026-10-23 | D1b epoxy loop (start=end D1a s402) | kling3_0 | 10s pro silent | 17a3af6e-ee04-4d78-b58f-8155b8caa103 | 17.5 | ACCEPTED (loop closes) | public/video/epoxy-loop.* |
+| 2026-10-23 | D2c tilt v1 | kling3_0 | 10s pro silent | 2b5a292a-6425-41bf-bd58-013f3ff6172c | 17.5 | REJECTED (morph not tilt, neon red crack) | assets/raw/video/d2_tilt_kling3_pro.mp4 |
+| 2026-10-23 | D2c tilt v2 | kling4_0 | 10s 1080p | fe28904c-e65d-48e4-b0a1-173805b7d091 | 10 | ACCEPTED (real tilt) | public/video/look-down.* |
+| 2026-10-23 | B3 KF2 s2001 | nano_banana_2_1 | 16:9 2k edit of KF3 | d4230b63-d7e7-442f-80e8-801ec5509d42 | 2 | CHOSEN | assets/raw/kf/kf2_2001.png |
+| 2026-10-23 | B3 KF2 s2002 | nano_banana_2_1 | 16:9 2k edit of KF3 | c4b5123f-9bab-4045-a365-0a45d67e0ba5 | 2 | not chosen (printed text on boards) | assets/raw/kf/kf2_2002.png |
+| 2026-10-23 | B4 KF1 s2101 | nano_banana_2_1 | 16:9 2k edit of KF3 | cec0f95b-e9c6-446c-96b1-c0d917f6f355 | 2 | CHOSEN (2nd candidate skipped) | assets/raw/kf/kf1_2101.png |
+| 2026-10-23 | E1 solid s501 | nano_banana_2_1 | 1:1 2k | 536cc93c-75f3-40f1-8d8d-746e9c7ee6d0 | 2 | CHOSEN (flattened) | public/textures/e1-solid.* |
+| 2026-10-23 | E4 plaster s801 | nano_banana_2_1 | 1:1 2k | d8bb8fb0-795d-4814-9e0a-eac2d3916e60 | 2 | CHOSEN | public/textures/e4-plaster.webp |
+| 2026-10-23 | E5 knockdown s901 | nano_banana_2_1 | 1:1 2k | e8043fb7-2b0f-40e9-87da-2059c475e7e4 | 2 | CHOSEN | public/textures/e5-knockdown.webp |
 
-### Upscale review log
-| File | Verdict (upscale / crop) | Note |
-|---|---|---|
-| (filled in during 0.2) | | |
+### Upscale review
+All 34 crop-vs-upscale pairs were reviewed side by side (`assets/compare/`, regenerated by `scripts/process_photos.py`). 33 accepted: mouldings, trim, chandeliers, shirt lettering and crew faces match the originals. 1 rejected: `24` (see above).
