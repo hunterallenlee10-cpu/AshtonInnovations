@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, type MouseEvent, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap } from "gsap";
@@ -24,6 +24,16 @@ export function scrollToTarget(target: string | number | HTMLElement, offset = 0
   }
   const el = typeof target === "string" ? document.querySelector(target) : target;
   el?.scrollIntoView();
+}
+
+// The logo links to "/". On the home page that click would do nothing, so glide
+// back to the top instead and drop any #section from the URL. Modified clicks
+// (new tab, new window) and other pages keep the normal link behavior.
+export function onHomeLinkClick(e: MouseEvent<HTMLAnchorElement>, pathname: string) {
+  if (pathname !== "/" || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  e.preventDefault();
+  if (window.location.hash) history.replaceState(null, "", "/");
+  scrollToTarget(0);
 }
 
 export function setScrollLocked(locked: boolean) {

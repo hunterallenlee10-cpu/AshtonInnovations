@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { business, navLinks } from "@/data/business";
 import { Wordmark } from "@/components/ui/Wordmark";
-import { scrollToTarget } from "@/components/providers/SmoothScroll";
+import { onHomeLinkClick, scrollToTarget } from "@/components/providers/SmoothScroll";
 
 export function Footer() {
   const pathname = usePathname();
@@ -30,7 +30,12 @@ export function Footer() {
       <div className="mx-auto max-w-[1440px] px-[var(--gutter)] pb-10 pt-[clamp(72px,9vw,128px)]">
         <div className="grid gap-x-12 gap-y-14 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="inline-flex min-h-11 items-center" aria-label="Ashton Innovations, home">
+            <Link
+              href="/"
+              onClick={(e) => onHomeLinkClick(e, pathname)}
+              className="inline-flex min-h-11 items-center"
+              aria-label="Ashton Innovations, home"
+            >
               <Wordmark />
             </Link>
             <p className="display mt-6 max-w-[16ch] text-[clamp(2rem,3.4vw,2.9rem)] leading-[1.02]">
